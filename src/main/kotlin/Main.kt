@@ -1,6 +1,3 @@
-
-
-
 fun main(args: Array<String>) {
 
     println("Welcome to your banking system")
@@ -33,11 +30,11 @@ fun main(args: Array<String>) {
 
     //according to assignment instructions, in here we are using random number generator to get the user inputs.
     var accountBalance = (1..1000).random()
-    println("Current account balance is $accountBalance dollars")
+
 
     //according to assignment instructions, in here we are using random number generator to get the user inputs.
     val money = (1..1000).random()
-//    println("You deposided/withdrawed $money dollars")
+
 
     var output = 0
 
@@ -65,8 +62,6 @@ fun main(args: Array<String>) {
         }
     }
 
-    output = debitWithdraw(money)
-    println("The amount you withdraw is $output dollars")
 
     fun deposit(amount: Int): Int{
 
@@ -77,8 +72,7 @@ fun main(args: Array<String>) {
         return amount
     }
 
-//    output = deposit(money)
-//    println(output)
+
 
     fun creditDeposit(amount: Int): Int{
 
@@ -98,8 +92,70 @@ fun main(args: Array<String>) {
         }
     }
 
-    output = creditDeposit(money)
-    println(output)
+    fun transfer(mode: String){
+
+        val transferAmount: Int
+
+        when(mode){
+
+            "withdraw" ->{
+
+                if(accountType == "debit"){
+                    transferAmount = debitWithdraw(money)
+                }else{
+                    transferAmount = withDraw(money)
+                }
+                println("The amount you withdrew is $transferAmount dollars")
+            }
+
+            "deposit" ->{
+
+                if(accountType == "credit"){
+                    transferAmount = creditDeposit(money)
+                }else{
+                    transferAmount = deposit(money)
+                }
+
+                println("The amount you deposited is $transferAmount dollars")
+            }
+            else -> return
+        }
+    }
+
+    var isSystemOpen = true
+    var option = 0
+
+    while(isSystemOpen){
+
+        println("What would you like to do?")
+        println("1. Check bank account balance")
+        println("2. Withdraw money")
+        println("3. Deposit money")
+        println("4. Close the app")
+        println("Which option do you choose? (1,2,3 or 4)")
+
+        //according to assignment instructions, in here we are using random number generator to get the user inputs.
+        option = (1..5).random()
+        println("You selected number $option option")
+
+        when(option){
+
+            1 -> {
+                println("Current account balance is $accountBalance dollars")
+            }
+            2 -> {
+                transfer("withdraw")
+            }
+            3 -> {
+                transfer("deposit")
+            }
+            4 -> {
+                isSystemOpen = false
+                println("The system is closed")
+            }
+            else -> continue
+        }
+    }
 }
 
 
